@@ -1,41 +1,48 @@
 # == Class: slurm
 #
-# Full description of class slurm here.
+# This module is intended for the automated provisioning and management of
+# compute nodes in a RedHat/CentOS based SLURM cluster.
 #
 # === Parameters
 #
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+# [*munge_key_filename*]
+#   File or Puppet file server path to munge-key accessible by compute node.
+# [*slurm_conf_location*]
+#   Directory on compute node that contains the shared slurm.conf
 #
 # === Examples
 #
 #  class { slurm:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    munge_key_filename => '/opt/apps/system/munge/munge.key',
+#    slurm_conf_location => '/opt/apps/system/slurm',
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Chandler Wilkerson <chwilk@rice.edu>
 #
 # === Copyright
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+# Copyright 2016 Chandler Wilkerson
 #
-class slurm {
+class slurm (
+    $disable_munge       = $slurm::params::disable_munge,
+    $munge_key_filename  = $slurm::params::munge_key_filename,
+    $slurm_conf_location = $slurm::params::slurm_conf_location,
+    $munge_packages      = $slurm::params::munge_packages,
+    $slurm_packages      = $slurm::params::slurm_packages,
+) inherits slurm::params {
+    validate_bool($disable_munge)
+    validate_absolute_path($munge_key_filename)
+    validate_absolute_path($slurm_conf_location)
+    validate_array($munge_packages)
+    validate_array($slurm_packages)
 
+    # Borrowing from structure of puppetlabs-ntp module
 
+    anchor { 'slurm::begin': } ->
+    class { '::slurm::install': } ->
+    class { '::slurm::config': } ->
+    class { '::slurm::service': } ->
+    anchor { 'slurm::end': }
 }
