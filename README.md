@@ -61,55 +61,88 @@ and then pass the puppet URI as the `munge_key_filename`.
 
 ## Usage
 
-### Booleans
+
+## Reference
+
+The style of this module has been borrowed heavily from the [puppetlabs-ntp](http://github.com/puppetlabs/puppetlabs-ntp) module.
+
+### Classes
+
+#### Public Classes
+
+* slurm: Main class, includes all other classes
+
+#### Private Classes
+
+* slurm::install: Handles Package resources
+
+* slurm::config: Handles editing configuration files, symbolic link of /etc/slurm, and the munge key.
+
+* slurm::service: Handles slurmd and munge services
+
+### Parameters
+
+#### Booleans
 
 Some features of the slurm module can be turned on or off through the use of boolean switches:
 
-* [*disable_munge*]
+#####`disable_munge`
 
-  Turns off all handling of munge keys or services. This may be used in case munge is to be handled separately, or if another authentication system is desired altogether.
-  Defaults to false
+Turns off all handling of munge keys or services. This may be used in case munge is to be handled separately, or if another authentication system is desired altogether.
 
-* [*force_munge*]
+Defaults to false
 
-  Turns on the munged option --force which causes the munge server to attempt to run even if it is unhappy with its environment.
-  Defaults to false
+#####`disable_pam`
 
-* [*disable_pam*]
+Turns off all editing of the PAM stack. PAM will no longer meter access by users running jobs.
 
-  Turns off all editing of the PAM stack. PAM will no longer meter access by users running jobs.
-  Defaults to false
+Defaults to false
 
-* [*package_manage*]
+#####`force_munge`
 
-  Turns off package installation, in case SLURM and/or MUNGE are to be handled in a different way.
-  Defaults to true
+Turns on the munged option --force which causes the munge server to attempt to run even if it is unhappy with its environment.
 
-### Strings
+Defaults to false
 
-* [*package_ensure*]
+#####`package_manage`
 
-  Set to `'present'` by default, you could change this to `'latest'` to force Puppet to automatically keep SLURM/MUNGE packages updated.
+Turns off package installation, in case SLURM and/or MUNGE are to be handled in a different way.
 
-* [*munge_key_filename*]
+Defaults to true
 
-  File or Puppet file server path to munge-key accessible by compute node.
+#### Strings
 
-* [*slurm_conf_location*]
+#####`munge_key_filename`
 
-  Directory on compute node that contains the shared slurm.conf
+File or Puppet file server path to munge-key accessible by compute node.
 
+#####`package_ensure`
 
-## Reference **TODO**
+Set to `'present'` by default, you could change this to `'latest'` to force Puppet to automatically keep SLURM/MUNGE packages updated.
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+#####`slurm_conf_location`
+
+Directory on compute node that contains the shared slurm.conf
+
+Set to `undef` by default.
+
+#### Arrays
+
+#####`munge_packages`
+
+Set of packages to be maintained for munge.
+
+#####`pam_packages`
+
+Set of packages to be maintained for SLURM PAM integration.
+
+#####`slurm_packages`
+
+Set of packages to be maintained for SLURM itself.
 
 ## Limitations
 
-This module is being developed on Red Hat Enterprise Linux (RHEL) version 6. Contributions helping to port to other distributions or operating systems are welcome.
+This module is being developed on Red Hat Enterprise Linux (RHEL) version 6. Contributions helping to port to other distributions or operating systems are welcome. I've tried to leave it in a state that will be considerate of porting efforts.
 
 ## Development
 
