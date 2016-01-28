@@ -61,6 +61,27 @@ and then pass the puppet URI as the `munge_key_filename`.
 
 ## Usage
 
+The slurm module is intended to be modular for use in differently managed clusters. For instance:
+
+### We use something other than MUNGE to authenticate
+
+```
+class slurm: {
+    disable_munge => true,
+    slurm_conf_location => '/shared/slurm/etc',
+}
+
+```
+
+### We don't want users logging into compute nodes whether or not they have jobs there.
+
+```
+class slurm: {
+    munge_key_filename => '/shared/secret/munge.key',
+    slurm_conf_location => '/shared/slurm/etc',
+    disable_pam => true,
+}
+```
 
 ## Reference
 
@@ -116,6 +137,12 @@ Defaults to true
 
 File or Puppet file server path to munge-key accessible by compute node.
 
+#####`munge_service_name`
+
+Which service to manage for munge.
+
+Defaults to `munge` for most OS's
+
 #####`package_ensure`
 
 Set to `'present'` by default, you could change this to `'latest'` to force Puppet to automatically keep SLURM/MUNGE packages updated.
@@ -125,6 +152,12 @@ Set to `'present'` by default, you could change this to `'latest'` to force Pupp
 Directory on compute node that contains the shared slurm.conf
 
 Set to `undef` by default.
+
+#####`slurm_service_name`
+
+Which service to manage for the local slurmd daemon.
+
+Varies based on distribution.
 
 #### Arrays
 
