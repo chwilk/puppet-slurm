@@ -65,23 +65,38 @@ and then pass the puppet URI as the `munge_key_filename`.
 
 Some features of the slurm module can be turned on or off through the use of boolean switches:
 
-[*disable_munge*]
+* [*disable_munge*]
+
   Turns off all handling of munge keys or services. This may be used in case munge is to be handled separately, or if another authentication system is desired altogether.
   Defaults to false
-[*force_munge*]
+
+* [*force_munge*]
+
   Turns on the munged option --force which causes the munge server to attempt to run even if it is unhappy with its environment.
   Defaults to false
-[*disable_pam*]
+
+* [*disable_pam*]
+
   Turns off all editing of the PAM stack. PAM will no longer meter access by users running jobs.
   Defaults to false
-[*package_manage*]
+
+* [*package_manage*]
+
   Turns off package installation, in case SLURM and/or MUNGE are to be handled in a different way.
   Defaults to true
-[*package_ensure*]
+
+### Strings
+
+* [*package_ensure*]
+
   Set to `'present'` by default, you could change this to `'latest'` to force Puppet to automatically keep SLURM/MUNGE packages updated.
-[*munge_key_filename*]
+
+* [*munge_key_filename*]
+
   File or Puppet file server path to munge-key accessible by compute node.
-[*slurm_conf_location*]
+
+* [*slurm_conf_location*]
+
   Directory on compute node that contains the shared slurm.conf
 
 
