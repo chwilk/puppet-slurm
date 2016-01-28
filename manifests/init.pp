@@ -43,17 +43,26 @@ class slurm (
     $slurm_packages      = $slurm::params::slurm_packages,
 ) inherits slurm::params {
     validate_bool($disable_munge)
-    validate_bool($force_munge)
     validate_bool($disable_pam)
-    validate_string($package_ensure)
-    validate_string($slurm_service_name)
-    validate_string($munge_service_name)
     validate_bool($package_manage)
-    validate_absolute_path($munge_key_filename)
+
+    if($package_manage) {
+        validate_string($package_ensure)
+        validate_array($slurm_packages)
+        unless($disable_pam) {
+            validate_array($pam_packages)
+        }
+        unless($disable_munge) {
+            validate_array($munge_packages)
+        }
+    }
+    validate_string($slurm_service_name)
+    unless($disable_munge) {
+        validate_absolute_path($munge_key_filename)
+        validate_bool($force_munge)
+        validate_string($munge_service_name)
+    }
     validate_absolute_path($slurm_conf_location)
-    validate_array($munge_packages)
-    validate_array($slurm_packages)
-    validate_array($pam_packages)
 
     # Borrowing from structure of puppetlabs-ntp module
 
