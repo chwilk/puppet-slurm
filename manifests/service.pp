@@ -4,9 +4,6 @@ class slurm::service inherits slurm {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-        unless $slurm::disable_munge {
-            require => Service['munge'],
-        }
     }
     unless $slurm::disable_munge {
         service {'munge':
@@ -14,6 +11,7 @@ class slurm::service inherits slurm {
             enable => true,
             hasstatus => true,
             hasrestart => true,
+            notify => Service[$slurm::slurm_service_name],
         }
     }
 }
