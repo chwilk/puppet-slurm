@@ -48,7 +48,7 @@ class slurm (
     validate_string($package_ensure)
     validate_string($slurm_service_name)
     validate_string($munge_service_name)
-    validate_boolean($package_manage)
+    validate_bool($package_manage)
     validate_absolute_path($munge_key_filename)
     validate_absolute_path($slurm_conf_location)
     validate_array($munge_packages)
