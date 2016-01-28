@@ -8,12 +8,6 @@ class slurm::params {
     $munge_key_filename = undef
     $slurm_conf_location = undef
 
-    $munge_service_name = undef
-    $slurm_service_name = undef
-
-    $munge_packages = []
-    $pam_packages = []
-    $slurm_packages = []
 
     case $::osfamily {
         'RedHat': {
