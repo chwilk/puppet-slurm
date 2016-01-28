@@ -9,4 +9,10 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-include slurm
+node default {
+
+    class { 'slurm':
+        munge_key_filename => '/opt/apps/system/munge/munge.key',
+        slurm_conf_location => '/opt/apps/system/slurm',
+    }
+}
