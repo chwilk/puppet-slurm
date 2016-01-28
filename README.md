@@ -32,10 +32,11 @@ For simplicity, some key configuration decisions have been assumed, namely:
 
 ### What slurm affects
 
-* MUNGE packages will be installed
+* MUNGE packages will be installed (optional)
 * The shared MUNGE key will be installed from a URI passed as a parameter to the module
 * /etc/slurm will be removed and recreated as a symbolic link to the shared file system passed as a parameter to the module.
-* slurmd services will be kept alive
+* munge and slurmd services will be kept alive
+* The PAM stack will be (optionally) edited to insert SLURM PAM controls to meter access to the node only to users running jobs on said node.
 * Optionally, the [Warewulf Node Health Check](https://github.com/mej/nhc) will be installed and configured.
 
 ### Setup Requirements
@@ -44,12 +45,45 @@ This module requires SLURM packages be made available by repo to the local node,
 
 ### Beginning with slurm
 
-The very basic steps needed for a user to get the module up and running.
+The slurm module requires some parameters to be functional.
 
-## Usage **TODO**
+The most basic example, using munge with a provided munge key:
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+```
+class slurm: {
+    munge_key_filename => '/shared/secret/munge.key',
+    slurm_conf_location => '/shared/slurm/etc',
+}
+```
+
+Alternatively, if sharing the munge key over NFS is undesireable, you could set it up on the puppet file server as [documented here](https://docs.puppetlabs.com/guides/file_serving.html) 
+and then pass the puppet URI as the `munge_key_filename`.
+
+## Usage
+
+### Booleans
+
+Some features of the slurm module can be turned on or off through the use of boolean switches:
+
+[*disable_munge*]
+  Turns off all handling of munge keys or services. This may be used in case munge is to be handled separately, or if another authentication system is desired altogether.
+  Defaults to false
+[*force_munge*]
+  Turns on the munged option --force which causes the munge server to attempt to run even if it is unhappy with its environment.
+  Defaults to false
+[*disable_pam*]
+  Turns off all editing of the PAM stack. PAM will no longer meter access by users running jobs.
+  Defaults to false
+[*package_manage*]
+  Turns off package installation, in case SLURM and/or MUNGE are to be handled in a different way.
+  Defaults to true
+[*package_ensure*]
+  Set to `'present'` by default, you could change this to `'latest'` to force Puppet to automatically keep SLURM/MUNGE packages updated.
+[*munge_key_filename*]
+  File or Puppet file server path to munge-key accessible by compute node.
+[*slurm_conf_location*]
+  Directory on compute node that contains the shared slurm.conf
+
 
 ## Reference **TODO**
 
