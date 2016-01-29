@@ -9,16 +9,21 @@ class slurm::params {
     $slurm_conf_location = undef
 
 
-    case $::osfamily {
-        'RedHat': {
+    case $::operatingsystem {
+        'RedHat', 'CentOS': {
             $munge_packages = ['munge', 'slurm-munge']
             $pam_packages = ['slurm-pam_slurm']
             $slurm_packages = ['slurm', 'slurm-devel', 'slurm-plugins']
             $munge_service_name = 'munge'
-            $slurm_service_name = 'slurm'
-            $sysconfigdir = '/etc/sysconfig'
+            if $::operatingsystemmajrelease >= 7 { # Everything changes with systemd
+              $slurm_service_name = 'slurmd'
+              $sysconfigdir = '/etc/default'
+            } else {
+              $slurm_service_name = 'slurm'
+              $sysconfigdir = '/etc/sysconfig'
+            }
         }
-        'Debian': {
+        'Debian', 'Ubuntu': {
             $munge_packages = ['munge']
             $pam_packages = ['libpam-slurm',]
             $slurm_packages = ['slurmd', 'slurm-client', 'slurm-wlm-basic-plugins', 'libslurm-dev']
