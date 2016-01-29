@@ -16,6 +16,7 @@ class slurm::params {
             $slurm_packages = ['slurm', 'slurm-devel', 'slurm-plugins']
             $munge_service_name = 'munge'
             $slurm_service_name = 'slurm'
+            $sysconfigdir = '/etc/sysconfig'
         }
         'Debian': {
             $munge_packages = ['munge']
@@ -23,6 +24,7 @@ class slurm::params {
             $slurm_packages = ['slurmd', 'slurm-client', 'slurm-wlm-basic-plugins', 'libslurm-dev']
             $munge_service_name = 'munge'
             $slurm_service_name = 'slurmd'
+            $sysconfigdir = '/etc/default'
         }
         default: {
             fail("The ${module_name} module is not supported on an ${::osfamily} based system.")

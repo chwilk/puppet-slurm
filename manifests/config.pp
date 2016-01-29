@@ -3,7 +3,7 @@ class slurm::config inherits slurm {
     # MUNGE
     unless $slurm::disable_munge {
         if $slurm::force_munge {
-            file { "/etc/default/$slurm::munge_service_name":
+            file { "$slurm::sysconfigdir/$slurm::munge_service_name":
                 ensure => file,
                 owner => 'root',
                 group => 'root',
@@ -54,7 +54,7 @@ class slurm::config inherits slurm {
         }
     }
     # SLURM
-    file { "/etc/default/$slurm::slurm_service_name":
+    file { "$slurm::sysconfigdir/$slurm::slurm_service_name":
         ensure => file,
         owner => 'root',
         group => 'root',

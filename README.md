@@ -159,6 +159,12 @@ Which service to manage for the local slurmd daemon.
 
 Varies based on distribution.
 
+#####`sysconfigdir`
+
+Where SLURM expects to find daemon config files on this distro.
+
+Varies based on distribution.
+
 #### Arrays
 
 #####`munge_packages`

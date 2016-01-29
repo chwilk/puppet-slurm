@@ -37,6 +37,7 @@ class slurm (
 
     $slurm_service_name  = $slurm::params::slurm_service_name,
     $munge_service_name  = $slurm::params::munge_service_name,
+    $sysconfigdir        = $slurm::params::sysconfigdir,
 
     $munge_packages      = $slurm::params::munge_packages,
     $pam_packages        = $slurm::params::pam_packages,
@@ -56,13 +57,14 @@ class slurm (
             validate_array($munge_packages)
         }
     }
-    validate_string($slurm_service_name)
     unless($disable_munge) {
         validate_string($munge_key_filename)
         validate_bool($force_munge)
         validate_string($munge_service_name)
     }
     validate_absolute_path($slurm_conf_location)
+    validate_string($slurm_service_name)
+    validate_absolute_path($sysconfigdir)
 
     # Borrowing from structure of puppetlabs-ntp module
 
