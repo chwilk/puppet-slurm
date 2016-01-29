@@ -54,7 +54,7 @@ class slurm::config inherits slurm {
         }
     }
     # SLURM
-    file { '/etc/default/slurmd':
+    file { "/etc/default/$slurm::slurm_service_name":
         ensure => file,
         owner => 'root',
         group => 'root',
