@@ -64,15 +64,15 @@ class slurm::config inherits slurm {
 
     file {'/var/spool/slurm':
         ensure => directory,
-        owner => "root",
-        group => "root",
+        owner => "slurm",
+        group => "slurm",
         mode => "0755",
     }
 
     file {'/var/spool/slurm/logs':
         ensure => directory,
-        owner => "root",
-        group => "root",
+        owner => "slurm",
+        group => "slurm",
         mode => "0755",
     }
 
