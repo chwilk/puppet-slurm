@@ -58,7 +58,7 @@ class slurm (
     }
     validate_string($slurm_service_name)
     unless($disable_munge) {
-        validate_absolute_path($munge_key_filename)
+        validate_string($munge_key_filename)
         validate_bool($force_munge)
         validate_string($munge_service_name)
     }
