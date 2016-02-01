@@ -12,6 +12,18 @@
       "name": "puppetlabs-stdlib",
       "version_range": ">= 1.0.0"
     }
+  ],
+  "tags": [ "slurm", "munge" ],
+  "operatingsystem_support": [
+  {
+        "operatingsystem":"RedHat",
+        "operatingsystemrelease":["6.5", "6.6", "7.0", "7.1", "7.2"]
+  },
+  {
+  "operatingsystem":"Ubuntu",
+  "operatingsystemrelease": ["14.04"]
+  }
   ]
+
 }
 
