@@ -119,6 +119,12 @@ Turns off all editing of the PAM stack. PAM will no longer meter access by users
 
 Defaults to false
 
+#####`disable_slurmd`
+
+Turns off slurm daemon service (might be useful on login nodes, for instance)
+
+Defaults to false
+
 #####`force_munge`
 
 Turns on the munged option --force which causes the munge server to attempt to run even if it is unhappy with its environment.

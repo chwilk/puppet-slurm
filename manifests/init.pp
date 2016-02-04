@@ -27,8 +27,9 @@
 #
 class slurm (
     $disable_munge       = $slurm::params::disable_munge,
-    $force_munge         = $slurm::params::force_munge,
     $disable_pam         = $slurm::params::disable_pam,
+    $disable_slurmd      = $slurm::params::disable_slurmd,
+    $force_munge         = $slurm::params::force_munge,
     $package_ensure      = $slurm::params::package_ensure,
     $package_manage      = $slurm::params::package_manage,
 
@@ -45,6 +46,7 @@ class slurm (
 ) inherits slurm::params {
     validate_bool($disable_munge)
     validate_bool($disable_pam)
+    validate_bool($disable_slurmd)
     validate_bool($package_manage)
 
     if($package_manage) {

@@ -1,6 +1,7 @@
 class slurm::params {
     $disable_munge = false
     $disable_pam = false
+    $disable_slurmd = false
     $package_manage = true
     $package_ensure = 'present'
     $force_munge = false
