@@ -13,7 +13,6 @@ class slurm::service inherits slurm {
       enable => true,
       hasstatus => true,
       hasrestart => true,
-      notify => Service[$slurm::slurm_service_name],
     }
   }
 }
