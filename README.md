@@ -195,4 +195,11 @@ I would be happy to review bug reports and pull requests via GitHub.
 
 ## Release Notes/Contributors/Etc
 
-Unreleased as yet... 
+* Fri Feb 5 2016 Chandler Wilkerson <chwilk@gmail.com> 0.1.2
+- Updating `disable_slurmd` parameter to `ensure_slurmd`
+
+* Wed Feb 3 2016 Chandler Wilkerson <chwilk@gmail.com> 0.1.1
+- Added `disable_slurmd` parameter
+
+* Mon Feb 1 2016 Chandler Wilkerson <chwilk@gmail.com> 0.1.0
+- Packaged and uploaded 0.1.0 release to Puppet Forge
