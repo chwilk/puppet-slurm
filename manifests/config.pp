@@ -50,6 +50,7 @@ class slurm::config inherits slurm {
           after => 'pam_access.so',
         }
       }
+      default: { warning('This puppet module needs some work for non-RedHat systems.') }
     }
   }
   # SLURM
