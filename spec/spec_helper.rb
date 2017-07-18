@@ -1,17 +1,15 @@
-dir = File.expand_path(File.dirname(__FILE__))
-$LOAD_PATH.unshift File.join(dir, 'lib')
+require 'puppetlabs_spec_helper/module_spec_helper'
 
-require 'mocha'
-require 'puppet'
-require 'rspec'
-require 'spec/autorun'
-
-Spec::Runner.configure do |config|
-    config.mock_with :mocha
+if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
+  RSpec.configure do |c|
+    c.before :each do
+      Puppet.settings[:strict] = :error
+    end
+  end
 end
 
-# We need this because the RAL uses 'should' as a method.  This
-# allows us the same behaviour but with a different method name.
-class Object
-    alias :must :should
+# put local configuration and setup into spec_helper_local
+begin
+  require 'spec_helper_local'
+rescue LoadError
 end
