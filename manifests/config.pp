@@ -87,5 +87,4 @@ class slurm::config inherits slurm {
     target => $slurm::slurm_conf_location,
     force  => true,
   }
-
 }
