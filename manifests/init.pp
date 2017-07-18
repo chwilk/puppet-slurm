@@ -70,9 +70,9 @@ class slurm (
 
     # Borrowing from structure of puppetlabs-ntp module
 
-    anchor { 'slurm::begin': } ->
-    class { '::slurm::install': } ->
-    class { '::slurm::config': } ->
-    class { '::slurm::service': } ->
-    anchor { 'slurm::end': }
+    anchor { 'slurm::begin': }
+    -> class { '::slurm::install': }
+    -> class { '::slurm::config': }
+    -> class { '::slurm::service': }
+    -> anchor { 'slurm::end': }
 }
