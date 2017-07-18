@@ -1,24 +1,39 @@
 ---
 sudo: false
 language: ruby
-cache: bundler
-script: "bundle exec rake release_checks"
-before_install:
-  - gem update bundler
+bundler_args: --without development system_tests
+before_install: rm Gemfile.lock || true
+rvm:
+  - 1.8.7
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+script: bundle exec rake test
+env:
+  - PUPPET_GEM_VERSION="~> 2.7.0"
+  - PUPPET_GEM_VERSION="~> 3.2.0"
+  - PUPPET_GEM_VERSION="~> 3.3.0"
+  - PUPPET_GEM_VERSION="~> 3.4.0"
+  - PUPPET_GEM_VERSION="~> 3.5.0" STRICT_VARIABLES=yes
+  - PUPPET_GEM_VERSION="~> 3.6.0" STRICT_VARIABLES=yes
+  - PUPPET_GEM_VERSION="~> 3.7.0" STRICT_VARIABLES=yes
+  - PUPPET_GEM_VERSION="~> 3.8.0" STRICT_VARIABLES=yes FUTURE_PARSER=yes
 matrix:
-  fast_finish: true
-  include:
-  - rvm: 2.3.1
-    dist: trusty
-    env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
-    script: bundle exec rake beaker
-    services: docker
-    sudo: required
-  - rvm: 2.4.0
-    bundler_args: --without system_tests
-    env: PUPPET_GEM_VERSION="~> 5.0"
-  - rvm: 2.1.9
-    bundler_args: --without system_tests
-    env: PUPPET_GEM_VERSION="~> 4.0"
-notifications:
-email: false
+  exclude:
+  # Ruby 1.9.3
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 2.7.0"
+    
+  # Ruby 2.0.0
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 2.7.0"
+    
+  # Ruby 2.1.0
+  - rvm: 2.1.0
+    env: PUPPET_GEM_VERSION="~> 2.7.0"
+  - rvm: 2.1.0
+    env: PUPPET_GEM_VERSION="~> 3.2.0"
+  - rvm: 2.1.0
+    env: PUPPET_GEM_VERSION="~> 3.3.0"
+  - rvm: 2.1.0
+env: PUPPET_GEM_VERSION="~> 3.4.0"
