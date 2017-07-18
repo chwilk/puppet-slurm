@@ -11,8 +11,8 @@
 #
 node default {
 
-    class { 'slurm':
-        munge_key_filename => '/opt/apps/system/munge/munge.key',
-        slurm_conf_location => '/opt/apps/system/slurm',
-    }
+  class { 'slurm':
+    munge_key_filename  => '/opt/apps/system/munge/munge.key',
+    slurm_conf_location => '/opt/apps/system/slurm',
+  }
 }
