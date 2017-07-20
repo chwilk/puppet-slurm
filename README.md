@@ -1,5 +1,6 @@
 # slurm
 
+[![Build Status](https://travis-ci.org/chwilk/puppet-slurm.svg?branch=master)](https://travis-ci.org/chwilk/puppet-slurm)
 #### Table of Contents
 
 1. [Overview](#overview)
